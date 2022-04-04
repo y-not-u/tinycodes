@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-18.04, windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
+      - name: install deps
+        run: |
+          npm install -g pnpm
+          pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run package
+
+      - name: Upload artifacts (AppImage)
+        uses: actions/upload-artifact@v2
+        if: startsWith(matrix.os, 'ubuntu')
+        with:
+          name: ubuntu-AppImage
+          path: release/build/*.AppImage
+
+      - name: Upload artifacts (dmg)
+        uses: actions/upload-artifact@v2
+        if: startsWith(matrix.os, 'macOS')
+        with:
+          name: mac-dmg
+          path: release/build/*.dmg
+
+      - name: Upload artifacts (exe)
+        uses: actions/upload-artifact@v2
+        if: startsWith(matrix.os, 'windows')
+        with:
+          name: win-exe
+          path: release/build/*.exe

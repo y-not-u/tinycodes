@@ -1,0 +1,58 @@
+.setting {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  & > h2 {
+    color: var(--color-contrast-low);
+  }
+  section {
+    margin-top: 20px;
+    .title {
+      margin: 10px 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-contrast-high);
+    }
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      margin: 10px 0;
+      color: var(--color-contrast-medium);
+      .shortcut-input {
+        color: gray;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        padding: 2px 8px;
+        text-align: right;
+        background-color: transparent;
+        &:focus {
+          border-color: #e0e0e0;
+        }
+      }
+      .action {
+        color: gray;
+      }
+      select {
+        border-radius: 5px;
+        border-color: #e0e0e0;
+        color: gray;
+        background-color: transparent;
+        &:hover {
+          border-color: gray;
+        }
+      }
+      button {
+        padding: 2px 8px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+          border-color: gray;
+        }
+      }
+    }
+  }
+}

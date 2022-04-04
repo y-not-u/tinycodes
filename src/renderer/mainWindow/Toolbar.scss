@@ -1,0 +1,30 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid var(--color-border);
+  -webkit-app-region: drag;
+  background: var(--color-topbar-bg);
+  button.new-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 26px;
+    background: #046eea;
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.8rem;
+    margin-left: 12px;
+    &:hover {
+      background: darken(#046eea, 10%);
+    }
+  }
+  .window-control,
+  .new-button {
+    -webkit-app-region: no-drag;
+  }
+}
