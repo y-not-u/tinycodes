@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font: 'Helvetica Neue', Helvetica, Arial, 'Microsoft Yahei',
+    'Hiragino Sans GB', 'Heiti SC', 'WenQuanYi Micro Hei', sans-serif;
+}
+
+input,
+button,
+textarea,
+:focus {
+  outline: none;
+}
+
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+a {
+  text-decoration: none;
+  height: fit-content;
+  width: fit-content;
+}
+
+a:hover {
+  opacity: 1;
+  text-decoration: none;
+}

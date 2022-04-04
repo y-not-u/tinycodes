@@ -1,0 +1,120 @@
+.sidebar {
+  position: relative;
+  width: 160px;
+  height: 100%;
+  background-color: var(--color-sidebar-bg);
+  .app-name {
+    display: flex;
+    align-items: center;
+    margin: 10px 16px;
+    -webkit-app-region: drag;
+    .logo {
+      width: 30px;
+    }
+    .name {
+      letter-spacing: 2px;
+      color: var(--color-text);
+      font-weight: 600;
+      // font-size: 1.3rem;
+      margin-left: 10px;
+    }
+  }
+  .modules {
+    height: calc(100% - 22px - 50px);
+    padding: 0 16px;
+    overflow-y: auto;
+  }
+  .section-item {
+    display: block;
+    margin: 5px 0 0 0;
+    width: 100%;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    color: var(--color-text);
+    .icon {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+    }
+    .title {
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    &.actived {
+      background-color: var(--color-bg-module-active);
+    }
+    .right-icon {
+      float: right;
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
+  .labels {
+    display: none;
+    &.show {
+      display: block;
+    }
+    .label-item {
+      color: gray;
+      font-size: 0.8rem;
+      height: 20px;
+      line-height: 20px;
+      margin: 0px 0 0px 10px;
+      padding: 0 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {
+        color: #dd4c4f;
+      }
+      &::before {
+        content: '#';
+        font-weight: 700;
+        color: #bdbdbd;
+        margin-right: 4px;
+      }
+    }
+  }
+  @media (max-width: 800px) {
+    width: 80px;
+    .app-name {
+      .logo {
+        width: 100%;
+      }
+      .name {
+        display: none;
+      }
+    }
+    .section-item {
+      justify-content: center;
+      padding: 6px;
+      .title {
+        display: none;
+      }
+    }
+  }
+  .bottom-section {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 6px 16px;
+    background-color: var(--color-sidebar-bg);
+    // .app-setting {
+    //   &:hover {
+    //     background-color: hsl(var(--color-sidebar-bg), 20%);
+    //     border-radius: 4px;
+    //   }
+    // }
+    .app-version {
+      font-size: 0.8rem;
+      vertical-align: top;
+      color: #8a8a8a;
+    }
+  }
+}

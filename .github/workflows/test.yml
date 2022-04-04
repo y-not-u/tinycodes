@@ -1,0 +1,34 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
+
+      - name: install deps
+        run: |
+          npm install -g pnpm
+          pnpm install --frozen-lockfile
+
+      - name: pnpm test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm run package
+          pnpm run lint
+          pnpm exec tsc
+          pnpm test
