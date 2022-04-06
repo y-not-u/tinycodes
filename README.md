@@ -1,5 +1,8 @@
 # TinyCodes
 
+![main](https://github.com/y-not-u/tinycodes/actions/workflows/main.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 一个易用又美观的代码管理软件
 
 ![dark.png](https://vip2.loli.io/2022/04/04/d1lrztsYIKcbJFi.png)
@@ -9,6 +12,7 @@
 - 支持 60+语言高亮
 - 美观的界面
 - 数据完全离线
+- WebDav 同步（开发中）
 
 ### 安装
 
