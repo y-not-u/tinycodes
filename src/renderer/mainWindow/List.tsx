@@ -48,6 +48,9 @@ const List = ({ filter }: { filter?: string }) => {
   const appStore = store?.appStore;
   const snippetsStore = store?.snippetsStore;
   const starStore = store?.starStore;
+  const newItemClass = classNames('new-snippet', 'actived', {
+    'is-empty': !store?.appStore.newSnippetTitle?.trim(),
+  });
 
   const handleSetSortBy = (val: typeof sortBy) => {
     setSortBy(val);
@@ -152,7 +155,7 @@ const List = ({ filter }: { filter?: string }) => {
         </DropdownMenu>
       </div>
       {store?.appStore.mode === 'new' && (
-        <div className="snippet actived">
+        <div className={newItemClass}>
           {store?.appStore.newSnippetTitle || 'Untitled'}
         </div>
       )}

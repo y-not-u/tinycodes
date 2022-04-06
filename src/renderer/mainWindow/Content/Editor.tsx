@@ -49,13 +49,13 @@ const Editor = (props: IProps) => {
   };
 
   const handleSave = useCallback(async () => {
-    const newContent = editorRef.current?.getValue() || '';
     let toastMsg = '';
+    const newContent = editorRef.current?.getValue() || '';
     if (!title.trim()) {
       toast.error('请输入片段标题', {
         position: toast.POSITION.BOTTOM_CENTER,
       });
-      return;
+      return false;
     }
     if (mode === 'new') {
       const saved = await snippetsStore?.add({
@@ -70,7 +70,7 @@ const Editor = (props: IProps) => {
       toastMsg = '添加成功';
     } else if (mode === 'edit') {
       if (!selectedSnippetId) {
-        return;
+        return false;
       }
       snippetsStore?.update({
         id: selectedSnippetId,
@@ -85,11 +85,14 @@ const Editor = (props: IProps) => {
       autoClose: 2000,
       hideProgressBar: true,
     });
+    return true;
   }, [mode, title, lang, selectedSnippetId, appStore, snippetsStore]);
 
-  const handleSaveAndQuit = () => {
-    handleSave();
-    appStore?.setMode('view');
+  const handleSaveAndQuit = async () => {
+    const isOk = await handleSave();
+    if (isOk) {
+      appStore?.setMode('view');
+    }
   };
 
   useEffect(() => {

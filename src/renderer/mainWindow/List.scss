@@ -64,6 +64,18 @@
     max-height: 100%;
     overflow: auto;
   }
+  .new-snippet {
+    padding: 8px 12px 8px 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &.is-empty {
+      color: var(--color-contrast-low);
+    }
+    &.actived {
+      background-color: var(--color-bg-snippet-active);
+    }
+  }
   .snippet {
     padding: 8px 12px;
     white-space: nowrap;
