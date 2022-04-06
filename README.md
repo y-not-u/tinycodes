@@ -2,6 +2,7 @@
 
 ![main](https://github.com/y-not-u/tinycodes/actions/workflows/main.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Github All Releases](https://img.shields.io/github/downloads/y-not-u/tinycodes/total.svg)]()
 
 一个易用又美观的代码管理软件
 

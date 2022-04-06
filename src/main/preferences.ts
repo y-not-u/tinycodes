@@ -9,6 +9,7 @@ const preferences = new StormDB(engine);
 
 export interface EditorPref {
   defaultLang: string;
+  defaultMode: 'readonly' | 'editable';
 }
 export interface Preferences {
   theme: 'light' | 'dark' | 'system';
@@ -23,6 +24,7 @@ preferences.default({
   labelsFolded: false,
   editor: {
     defaultLang: 'text',
+    defaultMode: 'readonly',
   },
   windowBounds: {
     width: 971,

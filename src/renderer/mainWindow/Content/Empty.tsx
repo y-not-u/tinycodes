@@ -11,7 +11,7 @@ const Empty = () => {
   useEffect(() => {
     const tips = [
       'Ctrl + Shift + V 可以呼出快捷窗口',
-      '有问题发送到xiangfeitian@pm.me',
+      '有问题发送到github.com/y-not-u/tinycodes',
       '我能吞下玻璃而不伤身体',
       'Talk is cheap. Show me the code.',
     ];

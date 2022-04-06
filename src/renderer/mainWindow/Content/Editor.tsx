@@ -10,7 +10,12 @@ import languages from './languages';
 import { useStore } from '../../contextProvider/storeContext';
 import './Content.scss';
 
-const Editor = () => {
+interface IProps {
+  editorTheme: 'light' | 'vs-dark';
+}
+
+const Editor = (props: IProps) => {
+  const { editorTheme } = props;
   const store = useStore();
   const editorRef = useRef<Monaco.editor.IStandaloneCodeEditor | null>(null);
   const [lang, setLang] = useState('text');
@@ -44,13 +49,13 @@ const Editor = () => {
   };
 
   const handleSave = useCallback(async () => {
-    const newContent = editorRef.current?.getValue() || '';
     let toastMsg = '';
+    const newContent = editorRef.current?.getValue() || '';
     if (!title.trim()) {
       toast.error('请输入片段标题', {
         position: toast.POSITION.BOTTOM_CENTER,
       });
-      return;
+      return false;
     }
     if (mode === 'new') {
       const saved = await snippetsStore?.add({
@@ -65,7 +70,7 @@ const Editor = () => {
       toastMsg = '添加成功';
     } else if (mode === 'edit') {
       if (!selectedSnippetId) {
-        return;
+        return false;
       }
       snippetsStore?.update({
         id: selectedSnippetId,
@@ -80,11 +85,14 @@ const Editor = () => {
       autoClose: 2000,
       hideProgressBar: true,
     });
+    return true;
   }, [mode, title, lang, selectedSnippetId, appStore, snippetsStore]);
 
-  const handleSaveAndQuit = () => {
-    handleSave();
-    appStore?.setMode('view');
+  const handleSaveAndQuit = async () => {
+    const isOk = await handleSave();
+    if (isOk) {
+      appStore?.setMode('view');
+    }
   };
 
   useEffect(() => {
@@ -141,7 +149,7 @@ const Editor = () => {
       <div className="data">
         <MonacoEditor
           onMount={handleEditorDidMount}
-          theme="vs-dark"
+          theme={editorTheme}
           language={lang}
           value={content}
         />

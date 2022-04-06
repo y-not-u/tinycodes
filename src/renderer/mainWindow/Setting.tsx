@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
 import yaml from 'js-yaml';
 import semver from 'semver';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { useHistory } from 'react-router-dom';
 import { useRef, useEffect, useState } from 'react';
 import { version } from '../../../release/app/package.json';
 import { useStore } from '../contextProvider/storeContext';
@@ -25,7 +27,11 @@ const Setting = () => {
   const [shortcut, setShortcut] = useState('');
   const [defaultLang, setDefaultLang] = useState('text');
   const [newVersion, setNewVersion] = useState<NewVersion | null>(null);
+  const [editorDefaultMode, setEditorDefaultMode] = useState<
+    'readonly' | 'editable'
+  >('readonly');
   const quickWindowShortcutRef = useRef<HTMLInputElement>(null);
+  const history = useHistory();
 
   useEventListener(
     'keyup',
@@ -70,6 +76,7 @@ const Setting = () => {
       )) as EditorPref;
       if (editorPref) {
         setDefaultLang(editorPref.defaultLang);
+        setEditorDefaultMode(editorPref.defaultMode);
       }
     })();
   }, []);
@@ -138,14 +145,30 @@ const Setting = () => {
     store?.appStore.setTheme(val as Theme);
   };
 
+  const handleSetEditorDefaultMode = (val: string) => {
+    window.electron.preferences.set('editor.defaultMode', val);
+    setEditorDefaultMode(val as 'readonly' | 'editable');
+  };
+
   const handleOpenSite = () => {
     setNewVersion(null);
     window.electron.shell.openExternal(APP_DOWNLOAD_URL);
   };
 
+  const handleGoBack = () => {
+    history.goBack();
+  };
+
   return (
     <div className="setting">
-      <h2>偏好设置</h2>
+      <div className="setting-title">
+        <h2>偏好设置</h2>
+        <AiOutlineCloseCircle
+          className="close-btn"
+          size={22}
+          onClick={handleGoBack}
+        />
+      </div>
       <section>
         <p className="title">外观</p>
         <div className="setting-item">
@@ -189,6 +212,16 @@ const Setting = () => {
             ))}
           </select>
         </div>
+        <div className="setting-item">
+          <span>默认模式</span>
+          <select
+            value={editorDefaultMode}
+            onChange={(e) => handleSetEditorDefaultMode(e.target.value)}
+          >
+            <option value="readonly">只读</option>
+            <option value="editable">可编辑</option>
+          </select>
+        </div>
       </section>
       <section>
         <p className="title">导出</p>
@@ -211,15 +244,9 @@ const Setting = () => {
       <section>
         <p className="title">关于</p>
         <div className="setting-item">
-          <span>官网</span>
-          <a className="external" href="https://tiny-codes.netlify.com">
-            tiny-codes.netlify.com
-          </a>
-        </div>
-        <div className="setting-item">
-          <span>反馈邮箱</span>
-          <a className="external" href="mailto:xiangfeitian@pm.me">
-            xiangfeitian@pm.me
+          <span>源码</span>
+          <a className="external" href="https://github.com/y-not-u/tinycodes">
+            github.com/y-not-u/tinycodes
           </a>
         </div>
       </section>
