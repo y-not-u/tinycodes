@@ -1,12 +1,12 @@
 {
   "name": "tiny-codes",
-  "productName": "贴码",
-  "version": "0.0.4",
-  "description": "贴码，一款管理代码的软件",
+  "productName": "TinyCodes",
+  "version": "0.0.5",
+  "description": "A Code Snippets Box",
   "main": "./dist/main/main.js",
   "author": {
-    "name": "Feitian",
-    "email": "xiangfeitian@pm.me"
+    "name": "Vogan",
+    "email": "voganwong@hotmail.com"
   },
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",

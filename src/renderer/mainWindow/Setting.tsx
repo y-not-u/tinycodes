@@ -244,15 +244,9 @@ const Setting = () => {
       <section>
         <p className="title">关于</p>
         <div className="setting-item">
-          <span>官网</span>
-          <a className="external" href="https://tiny-codes.netlify.com">
-            tiny-codes.netlify.com
-          </a>
-        </div>
-        <div className="setting-item">
-          <span>反馈邮箱</span>
-          <a className="external" href="mailto:xiangfeitian@pm.me">
-            xiangfeitian@pm.me
+          <span>源码</span>
+          <a className="external" href="https://github.com/y-not-u/tinycodes">
+            github.com/y-not-u/tinycodes
           </a>
         </div>
       </section>

@@ -1,6 +1,6 @@
 {
   "name": "tiny-codes",
-  "productName": "贴码",
+  "productName": "TinyCodes",
   "description": "A tiny codes box.",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
@@ -31,9 +31,9 @@
     ]
   },
   "build": {
-    "productName": "贴码",
+    "productName": "TinyCodes",
     "appId": "com.netlify.tiny-codes",
-    "copyright": "xiangfeitian@pm.me",
+    "copyright": "",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -102,17 +102,10 @@
     }
   },
   "author": {
-    "name": "XiangFeitian",
-    "email": "xiangfeitian@pm.me",
+    "name": "Vogan",
+    "email": "voganwong@hotmail.com",
     "url": "https://tiny-codes.netlify.com/"
   },
-  "contributors": [
-    {
-      "name": "Xiang Feitian",
-      "email": "xiangfeitian@pm.me",
-      "url": "https://tiny-codes.netlify.com/"
-    }
-  ],
   "license": "MIT",
   "homepage": "https://tiny-codes.netlify.com/",
   "jest": {
