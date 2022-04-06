@@ -10,7 +10,12 @@ import languages from './languages';
 import { useStore } from '../../contextProvider/storeContext';
 import './Content.scss';
 
-const Editor = () => {
+interface IProps {
+  editorTheme: 'light' | 'vs-dark';
+}
+
+const Editor = (props: IProps) => {
+  const { editorTheme } = props;
   const store = useStore();
   const editorRef = useRef<Monaco.editor.IStandaloneCodeEditor | null>(null);
   const [lang, setLang] = useState('text');
@@ -141,7 +146,7 @@ const Editor = () => {
       <div className="data">
         <MonacoEditor
           onMount={handleEditorDidMount}
-          theme="vs-dark"
+          theme={editorTheme}
           language={lang}
           value={content}
         />

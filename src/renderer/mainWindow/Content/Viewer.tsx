@@ -17,7 +17,12 @@ import './Content.scss';
 dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
 
-const Viewer = () => {
+interface IProps {
+  editorTheme: 'light' | 'vs-dark';
+}
+
+const Viewer = (props: IProps) => {
+  const { editorTheme } = props;
   const store = useStore();
   const editorRef = useRef<Monaco.editor.IStandaloneCodeEditor | null>(null);
   const selectedSnippetId = store?.appStore.selectedSnippetId;
@@ -74,7 +79,7 @@ const Viewer = () => {
           <MonacoEditor
             onMount={handleEditorDidMount}
             value={snippet?.content}
-            theme="vs-dark"
+            theme={editorTheme}
             options={{ readOnly: true }}
             language={snippet?.lang}
           />
