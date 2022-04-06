@@ -3,8 +3,20 @@
   padding: 10px 20px;
   background-color: var(--color-bg);
   color: var(--color-text);
-  & > h2 {
-    color: var(--color-contrast-low);
+  position: relative;
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      color: var(--color-contrast-low);
+    }
+    .close-btn {
+      color: var(--color-contrast-low);
+      &:hover {
+        color: var(--color-contrast-medium);
+      }
+    }
   }
   section {
     margin-top: 20px;
@@ -28,8 +40,9 @@
         padding: 2px 8px;
         text-align: right;
         background-color: transparent;
+        border-color: #e0e0e0;
         &:focus {
-          border-color: #e0e0e0;
+          border-color: var(--color-contrast-medium);
         }
       }
       .action {

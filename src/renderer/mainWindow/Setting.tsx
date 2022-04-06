@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
 import yaml from 'js-yaml';
 import semver from 'semver';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { useHistory } from 'react-router-dom';
 import { useRef, useEffect, useState } from 'react';
 import { version } from '../../../release/app/package.json';
 import { useStore } from '../contextProvider/storeContext';
@@ -26,6 +28,7 @@ const Setting = () => {
   const [defaultLang, setDefaultLang] = useState('text');
   const [newVersion, setNewVersion] = useState<NewVersion | null>(null);
   const quickWindowShortcutRef = useRef<HTMLInputElement>(null);
+  const history = useHistory();
 
   useEventListener(
     'keyup',
@@ -143,9 +146,20 @@ const Setting = () => {
     window.electron.shell.openExternal(APP_DOWNLOAD_URL);
   };
 
+  const handleGoBack = () => {
+    history.goBack();
+  };
+
   return (
     <div className="setting">
-      <h2>偏好设置</h2>
+      <div className="setting-title">
+        <h2>偏好设置</h2>
+        <AiOutlineCloseCircle
+          className="close-btn"
+          size={22}
+          onClick={handleGoBack}
+        />
+      </div>
       <section>
         <p className="title">外观</p>
         <div className="setting-item">
