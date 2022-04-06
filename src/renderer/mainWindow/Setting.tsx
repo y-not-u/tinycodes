@@ -27,6 +27,9 @@ const Setting = () => {
   const [shortcut, setShortcut] = useState('');
   const [defaultLang, setDefaultLang] = useState('text');
   const [newVersion, setNewVersion] = useState<NewVersion | null>(null);
+  const [editorDefaultMode, setEditorDefaultMode] = useState<
+    'readonly' | 'editable'
+  >('readonly');
   const quickWindowShortcutRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
@@ -73,6 +76,7 @@ const Setting = () => {
       )) as EditorPref;
       if (editorPref) {
         setDefaultLang(editorPref.defaultLang);
+        setEditorDefaultMode(editorPref.defaultMode);
       }
     })();
   }, []);
@@ -141,6 +145,11 @@ const Setting = () => {
     store?.appStore.setTheme(val as Theme);
   };
 
+  const handleSetEditorDefaultMode = (val: string) => {
+    window.electron.preferences.set('editor.defaultMode', val);
+    setEditorDefaultMode(val as 'readonly' | 'editable');
+  };
+
   const handleOpenSite = () => {
     setNewVersion(null);
     window.electron.shell.openExternal(APP_DOWNLOAD_URL);
@@ -201,6 +210,16 @@ const Setting = () => {
                 {i.label}
               </option>
             ))}
+          </select>
+        </div>
+        <div className="setting-item">
+          <span>默认模式</span>
+          <select
+            value={editorDefaultMode}
+            onChange={(e) => handleSetEditorDefaultMode(e.target.value)}
+          >
+            <option value="readonly">只读</option>
+            <option value="editable">可编辑</option>
           </select>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
+import { EditorPref } from '../../../main/preferences';
 import { useStore } from '../../contextProvider/storeContext';
 import Empty from './Empty';
 import Editor from './Editor';
@@ -11,6 +12,9 @@ const Content = () => {
   const theme = store?.appStore?.theme;
 
   const [editorTheme, setEditorTheme] = useState<'light' | 'vs-dark'>('light');
+  const [editorMode, setEditorMode] = useState<'readonly' | 'editable'>(
+    'readonly'
+  );
 
   useEffect(() => {
     switch (theme) {
@@ -35,10 +39,26 @@ const Content = () => {
     }
   }, [theme]);
 
+  useEffect(() => {
+    (async () => {
+      const editorPref = (await window.electron.preferences.get(
+        'editor'
+      )) as EditorPref;
+      if (editorPref) {
+        setEditorMode(editorPref.defaultMode);
+      }
+    })();
+  }, []);
+
   let showView: React.ReactNode;
   switch (store?.appStore.mode) {
     case 'view':
-      showView = <Viewer editorTheme={editorTheme} />;
+      showView = (
+        <Viewer
+          editorTheme={editorTheme}
+          readonly={editorMode === 'readonly'}
+        />
+      );
       break;
     case 'new':
       showView = <Editor editorTheme={editorTheme} />;
