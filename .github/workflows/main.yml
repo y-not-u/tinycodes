@@ -63,4 +63,7 @@ jobs:
         with:
           draft: true
           body: New release
-          files: /tmp/artifacts/*
+          files: |
+            /tmp/artifacts/ubuntu-AppImage
+            /tmp/artifacts/mac-dmg
+            /tmp/artifacts/win-exe
