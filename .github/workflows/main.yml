@@ -65,8 +65,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           draft: true
+          fail_on_unmatched_files: true
           body: New release
-          files: |
-            /tmp/artifacts/ubuntu-AppImage
-            /tmp/artifacts/mac-dmg
-            /tmp/artifacts/win-exe
+          files: /tmp/artifacts/**
