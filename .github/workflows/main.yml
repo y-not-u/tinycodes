@@ -58,9 +58,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: /tmp/artifacts
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: /tmp/artifacts
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
+          fail_on_unmatched_files: true
           body: New release
-          files: /tmp/artifacts/*
+          files: /tmp/artifacts/**
