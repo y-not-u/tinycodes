@@ -49,3 +49,20 @@ jobs:
         with:
           name: win-exe
           path: release/build/*.exe
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: /tmp/artifacts
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        working-directory: /tmp/artifacts
+        with:
+          draft: true
+          body: New release
+          files: |
+            *.dmg
+            *.exe
+            *.AppImage
