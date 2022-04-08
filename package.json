@@ -97,8 +97,9 @@
       "./assets/**"
     ],
     "publish": {
-      "provider": "generic",
-      "url": "https://tiny-codes.netlify.com/"
+      "provider": "github",
+      "owner": "y-not-u",
+      "repo": "tinycodes"
     }
   },
   "author": {
@@ -224,6 +225,7 @@
     "dayjs": "^1.10.7",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.1",
+    "electron-updater": "^4.6.5",
     "highlight.js": "^11.3.1",
     "history": "4.x.x",
     "js-yaml": "^4.1.0",
@@ -240,7 +242,6 @@
     "react-tooltip": "^4.2.21",
     "react-windows-controls": "^1.1.1",
     "regenerator-runtime": "^0.13.9",
-    "semver": "^7.3.5",
     "simplebar-react": "^2.3.6",
     "stormdb": "^0.5.2",
     "uuid": "^8.3.2"

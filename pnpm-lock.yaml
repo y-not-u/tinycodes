@@ -45,6 +45,7 @@ specifiers:
   electron-log: ^4.4.1
   electron-notarize: ^1.1.1
   electron-rebuild: ^3.2.3
+  electron-updater: ^4.6.5
   enzyme: ^3.11.0
   enzyme-adapter-react-16: ^1.15.6
   enzyme-to-json: ^3.6.2
@@ -89,7 +90,6 @@ specifiers:
   rimraf: ^3.0.2
   sass: ^1.43.4
   sass-loader: ^12.3.0
-  semver: ^7.3.5
   simplebar-react: ^2.3.6
   source-map-support: ^0.5.21
   stormdb: ^0.5.2
@@ -116,6 +116,7 @@ dependencies:
   dayjs: 1.10.7
   electron-debug: 3.2.0
   electron-log: 4.4.1
+  electron-updater: 4.6.5
   highlight.js: 11.3.1
   history: 4.10.1
   js-yaml: 4.1.0
@@ -132,7 +133,6 @@ dependencies:
   react-tooltip: 4.2.21_react-dom@17.0.2+react@17.0.2
   react-windows-controls: 1.1.1
   regenerator-runtime: 0.13.9
-  semver: 7.3.5
   simplebar-react: 2.3.6_react-dom@17.0.2+react@17.0.2
   stormdb: 0.5.2
   uuid: 8.3.2
@@ -1408,7 +1408,6 @@ packages:
 
   /@types/semver/7.3.9:
     resolution: {integrity: sha512-L/TMpyURfBkf+o/526Zb6kd/tchUP3iBDEPjqjb+U2MAJhVRxxrmr2fwpe08E7QsV7YLcpq0tUaQ9O9x97ZIxQ==}
-    dev: true
 
   /@types/stack-utils/2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
@@ -2531,6 +2530,16 @@ packages:
       - supports-color
     dev: true
 
+  /builder-util-runtime/8.9.2:
+    resolution: {integrity: sha512-rhuKm5vh7E0aAmT6i8aoSfEjxzdYEFX7zDApK+eNgOhjofnWb74d9SRJv0H/8nsgOkos0TZ4zxW0P8J4N7xQ2A==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      debug: 4.3.2
+      sax: 1.2.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /builder-util/22.14.5:
     resolution: {integrity: sha512-zqIHDFJwmA7jV7SC9aI+33MWwT2mWoijH+Ol9IntNAwuuRXoS+7XeJwnhLBXOhcDBzXT4kDzHnRk4JKeaygEYA==}
     dependencies:
@@ -3548,6 +3557,7 @@ packages:
     resolution: {integrity: sha512-Rq6qMDaDou2+aPN2SYy0x7LDznoJ/XaG6oDcH5wXUp+WRWQMUYE6eM+F+nex+/LSXOp1uw4HLFoed0YbfU8R/Q==}
     engines: {node: '>=8'}
     os: [darwin]
+    deprecated: 'Disk image license agreements are deprecated by Apple and will probably be removed in a future macOS release. Discussion at: https://github.com/argv-minus-one/dmg-license/issues/11'
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -3806,6 +3816,21 @@ packages:
   /electron-to-chromium/1.3.903:
     resolution: {integrity: sha512-+PnYAyniRRTkNq56cqYDLq9LyklZYk0hqoDy9GpcU11H5QjRmFZVDbxtgHUMK/YzdNTcn1XWP5gb+hFlSCr20g==}
     dev: true
+
+  /electron-updater/4.6.5:
+    resolution: {integrity: sha512-kdTly8O9mSZfm9fslc1mnCY+mYOeaYRy7ERa2Fed240u01BKll3aiupzkd07qKw69KvhBSzuHroIW3mF0D8DWA==}
+    dependencies:
+      '@types/semver': 7.3.9
+      builder-util-runtime: 8.9.2
+      fs-extra: 10.0.0
+      js-yaml: 4.1.0
+      lazy-val: 1.0.5
+      lodash.escaperegexp: 4.1.2
+      lodash.isequal: 4.5.0
+      semver: 7.3.5
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /electron/15.3.2:
     resolution: {integrity: sha512-sEpOX10gjAyvq33HDxJrq2HhYZT3qndZjUrHkzG16QTLjykP7lMvGnJ/bt6wn+T75f4wwv59FUbQx2hW3Xz5TQ==}
@@ -4809,7 +4834,6 @@ packages:
       graceful-fs: 4.2.8
       jsonfile: 6.1.0
       universalify: 2.0.0
-    dev: true
 
   /fs-extra/8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
@@ -5065,7 +5089,6 @@ packages:
 
   /graceful-fs/4.2.8:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}
-    dev: true
 
   /graceful-readlink/1.0.1:
     resolution: {integrity: sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=}
@@ -6473,7 +6496,6 @@ packages:
       universalify: 2.0.0
     optionalDependencies:
       graceful-fs: 4.2.8
-    dev: true
 
   /jsx-ast-utils/3.2.1:
     resolution: {integrity: sha512-uP5vu8xfy2F9A6LGC22KO7e2/vGTS1MhP+18f++ZNlf0Ohaxbc9nIEwHAsejlJKyzfZzU5UIhe5ItYkitcZnZA==}
@@ -6546,7 +6568,6 @@ packages:
 
   /lazy-val/1.0.5:
     resolution: {integrity: sha512-0/BnGCCfyUMkBpeDgWihanIAF9JmZhHBgUhEqzvf+adhNGLoP6TaiI5oF8oyb3I45P+PcnrqihSf01M0l0G5+Q==}
-    dev: true
 
   /leven/3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -6683,13 +6704,16 @@ packages:
     resolution: {integrity: sha1-yQRGkMIeBClL6qUXcS/e0fqI3pg=}
     dev: true
 
+  /lodash.escaperegexp/4.1.2:
+    resolution: {integrity: sha1-ZHYsSGGAglGKw99Mz11YhtriA0c=}
+    dev: false
+
   /lodash.flattendeep/4.4.0:
     resolution: {integrity: sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=}
     dev: true
 
   /lodash.isequal/4.5.0:
     resolution: {integrity: sha1-QVxEePK8wwEgwizhDtMib30+GOA=}
-    dev: true
 
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=}
@@ -8681,7 +8705,6 @@ packages:
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
-    dev: true
 
   /saxes/5.0.1:
     resolution: {integrity: sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==}
@@ -9773,7 +9796,6 @@ packages:
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
-    dev: true
 
   /unpipe/1.0.0:
     resolution: {integrity: sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=}
