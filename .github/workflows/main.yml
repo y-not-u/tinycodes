@@ -33,9 +33,9 @@ jobs:
         uses: y-not-u/electron-builder-latest-yml-action@v1
         with:
           version: ${{github.ref_name}}
-          artifact: release/build/*.AppImage
+          artifact: 'release/build/*.AppImage'
           yml-file: 'latest-linux.yml'
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: startsWith(matrix.os, 'ubuntu')
         with:
           name: ubuntu-AppImage
@@ -54,9 +54,9 @@ jobs:
         uses: y-not-u/electron-builder-latest-yml-action@v1
         with:
           version: ${{github.ref_name}}
-          artifact: release/build/*.exe
+          artifact: 'release/build/*.exe'
           yml-file: 'latest.yml'
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: startsWith(matrix.os, 'windows')
         with:
           name: win-exe
