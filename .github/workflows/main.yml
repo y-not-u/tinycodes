@@ -30,11 +30,18 @@ jobs:
         run: pnpm run package
 
       - name: Upload artifacts (AppImage)
-        uses: actions/upload-artifact@v2
+        uses: y-not-u/electron-builder-latest-yml-action@v1
+        with:
+          version: ${{github.ref_name}}
+          artifact: release/build/*.AppImage
+          yml-file: 'latest-linux.yml'
+      - uses: actions/upload-artifact@v2
         if: startsWith(matrix.os, 'ubuntu')
         with:
           name: ubuntu-AppImage
-          path: release/build/*.AppImage
+          path: |
+            release/build/*.AppImage
+            latest-linux.yml
 
       - name: Upload artifacts (dmg)
         uses: actions/upload-artifact@v2
@@ -44,11 +51,18 @@ jobs:
           path: release/build/*.dmg
 
       - name: Upload artifacts (exe)
-        uses: actions/upload-artifact@v2
+        uses: y-not-u/electron-builder-latest-yml-action@v1
+        with:
+          version: ${{github.ref_name}}
+          artifact: release/build/*.exe
+          yml-file: 'latest.yml'
+      - uses: actions/upload-artifact@v2
         if: startsWith(matrix.os, 'windows')
         with:
           name: win-exe
-          path: release/build/*.exe
+          path: |
+            latest.yml
+            release/build/*.exe
   release:
     runs-on: ubuntu-latest
     needs: [build]
