@@ -33,7 +33,7 @@
   "build": {
     "productName": "TinyCodes",
     "appId": "com.netlify.tiny-codes",
-    "copyright": "",
+    "copyright": "github.com/y-not-u",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -86,7 +86,8 @@
       "perMachine": true,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
+      "createStartMenuShortcut": true,
+      "artifactName": "${productName}-Setup-${version}.${ext}"
     },
     "directories": {
       "app": "release/app",
@@ -108,7 +109,7 @@
     "url": "https://tiny-codes.netlify.com/"
   },
   "license": "MIT",
-  "homepage": "https://tiny-codes.netlify.com/",
+  "homepage": "https://github.com/y-not-u/tinycodes/",
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",
