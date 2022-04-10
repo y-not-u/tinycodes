@@ -29,12 +29,21 @@ jobs:
       - name: Build
         run: pnpm run package
 
+      - name: Hash artifacts
+        uses: y-not-u/electron-builder-latest-yml-action@v1
+        if: startsWith(matrix.os, 'ubuntu')
+        with:
+          version: ${{github.ref_name}}
+          artifact: 'release/build/*.AppImage'
+          yml-file: 'latest-linux.yml'
       - name: Upload artifacts (AppImage)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: startsWith(matrix.os, 'ubuntu')
         with:
           name: ubuntu-AppImage
-          path: release/build/*.AppImage
+          path: |
+            release/build/*.AppImage
+            latest-linux.yml
 
       - name: Upload artifacts (dmg)
         uses: actions/upload-artifact@v2
@@ -43,12 +52,21 @@ jobs:
           name: mac-dmg
           path: release/build/*.dmg
 
+      - name: Hash artifacts
+        uses: y-not-u/electron-builder-latest-yml-action@v1
+        if: startsWith(matrix.os, 'windows')
+        with:
+          version: ${{github.ref_name}}
+          artifact: 'release/build/*.exe'
+          yml-file: 'latest.yml'
       - name: Upload artifacts (exe)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: startsWith(matrix.os, 'windows')
         with:
           name: win-exe
-          path: release/build/*.exe
+          path: |
+            latest.yml
+            release/build/*.exe
   release:
     runs-on: ubuntu-latest
     needs: [build]

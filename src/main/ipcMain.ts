@@ -13,7 +13,7 @@ import {
   updateSnippet,
   updateStars,
 } from './service';
-import { checkUpdate } from './util';
+import AppUpdater from './updater';
 
 ipcMain.handle('db-new-snippet', async (_, val) => {
   return newSnippet(val);
@@ -79,5 +79,6 @@ ipcMain.handle('system.isDarkMode', () => {
 });
 
 ipcMain.handle('checkUpdate', () => {
-  return checkUpdate();
+  const updater = new AppUpdater();
+  return updater;
 });

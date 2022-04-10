@@ -2,8 +2,6 @@ import useEventListener from '@use-it/event-listener';
 import { observer } from 'mobx-react';
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
-import yaml from 'js-yaml';
-import semver from 'semver';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { useRef, useEffect, useState } from 'react';
@@ -114,26 +112,11 @@ const Setting = () => {
   };
 
   const handleCheckUpdate = () => {
-    window.electron.system
-      .checkUpdate()
-      .then((res) => {
-        const updateData = yaml.load(res as string) as NewVersion;
-        const { version: latestVersion } = updateData;
-        if (semver.gt(latestVersion, version)) {
-          setNewVersion(updateData);
-        } else {
-          toast.info('当前没有可用的更新', {
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
-        }
-
-        return updateData;
-      })
-      .catch(() => {
-        toast.warning('发送失败，轻检查网络', {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+    window.electron.system.checkUpdate().catch(() => {
+      toast.warning('发送失败，轻检查网络', {
+        position: toast.POSITION.BOTTOM_CENTER,
       });
+    });
   };
 
   const handleSetDefaultLang = (val: string) => {
