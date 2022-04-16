@@ -2,7 +2,7 @@ import {
   NotFoundError,
   SyncLockError,
   UnauthorizedError,
-} from '../../main/handles/webdav';
+} from '../../exceptions/webdav';
 import {
   dismissNotify,
   notifyError,
