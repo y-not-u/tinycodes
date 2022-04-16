@@ -14,7 +14,8 @@
     "start:main": "cross-env NODE_ENV=development electron -r ts-node/register/transpile-only ./src/main/main.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean": "node scripts/clean.js"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -245,7 +246,8 @@
     "regenerator-runtime": "^0.13.9",
     "simplebar-react": "^2.3.6",
     "stormdb": "^0.5.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "webdav": "^4.8.0"
   },
   "devEngines": {
     "node": ">=14.x",

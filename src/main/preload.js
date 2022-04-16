@@ -12,12 +12,29 @@ contextBridge.exposeInMainWorld('electron', {
       return ipcRenderer.invoke('checkUpdate');
     },
   },
+  webdav: {
+    connect() {
+      return ipcRenderer.invoke('webdav.connect');
+    },
+    download() {
+      return ipcRenderer.invoke('webdav.download');
+    },
+    upload(data) {
+      return ipcRenderer.invoke('webdav.upload', data);
+    },
+    exists() {
+      return ipcRenderer.invoke('webdav.exists');
+    },
+    sync() {
+      return ipcRenderer.invoke('webdav.sync');
+    },
+  },
   preferences: {
     get(key) {
       return ipcRenderer.invoke('preferences.get', key);
     },
     set(key, value) {
-      ipcRenderer.invoke('preferences.set', key, value);
+      return ipcRenderer.invoke('preferences.set', key, value);
     },
   },
   setting: {
@@ -77,6 +94,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
   },
   db: {
+    all() {
+      return ipcRenderer.invoke('db.all');
+    },
     newSnippet(snippet) {
       return ipcRenderer.invoke('db-new-snippet', snippet);
     },

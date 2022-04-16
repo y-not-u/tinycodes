@@ -11,11 +11,19 @@ export interface EditorPref {
   defaultLang: string;
   defaultMode: 'readonly' | 'editable';
 }
+
+export interface WebDavPref {
+  username: string;
+  password: string;
+  url: string;
+}
+
 export interface Preferences {
   theme: 'light' | 'dark' | 'system';
   sortBy: 'time' | 'title';
   labelsFolded: boolean;
   editor: EditorPref;
+  webdav: WebDavPref;
 }
 
 preferences.default({
@@ -32,6 +40,11 @@ preferences.default({
   },
   shortcuts: {
     quickWindow: 'Ctrl + Shift + V',
+  },
+  webdav: {
+    username: '',
+    password: '',
+    url: '',
   },
 });
 

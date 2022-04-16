@@ -9,9 +9,16 @@ declare global {
         isDarkMode: () => Promise<boolean>;
         checkUpdate: () => Promise<unknown>;
       };
+      webdav: {
+        connect: () => Promise<boolean>;
+        exists: () => Promise<boolean>;
+        download: () => Promise<void>;
+        upload: (data: string) => Promise<boolean>;
+        sync: () => Promise<boolean>;
+      };
       preferences: {
-        get: (key: string) => Promise<unknown>;
-        set: (key: string, value: unknown) => void;
+        get: <T>(key: string) => Promise<T>;
+        set: <T>(key: string, value: unknown) => Promise<T>;
       };
       shell: Shell;
       setting: {
@@ -35,6 +42,7 @@ declare global {
         closeQuickWindow: () => void;
       };
       db: {
+        all: () => Promise<object>;
         newSnippet: (snippet: NewSnippet) => Promise<Snippet>;
         updateSnippet: (snippet: Snippet) => void;
         removeSnippet: (id: string) => void;

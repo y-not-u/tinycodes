@@ -1,5 +1,6 @@
 import { ipcMain, clipboard, nativeTheme } from 'electron';
 import preferences from './preferences';
+import db from './db';
 import {
   addLabel,
   getLabels,
@@ -14,6 +15,10 @@ import {
   updateStars,
 } from './service';
 import AppUpdater from './updater';
+
+ipcMain.handle('db.all', async () => {
+  return db.value();
+});
 
 ipcMain.handle('db-new-snippet', async (_, val) => {
   return newSnippet(val);
@@ -70,8 +75,8 @@ ipcMain.handle('preferences.get', async (_, key: string) => {
   }
 });
 
-ipcMain.handle('preferences.set', (_, key: string, value: unknown) => {
-  preferences.set(key, value).save();
+ipcMain.handle('preferences.set', async (_, key: string, value: unknown) => {
+  return preferences.set(key, value).save();
 });
 
 ipcMain.handle('system.isDarkMode', () => {
