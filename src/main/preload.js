@@ -4,6 +4,17 @@ contextBridge.exposeInMainWorld('electron', {
   process: {
     platform: process.platform,
   },
+  log: {
+    info(message) {
+      return ipcRenderer.invoke('log.info', message);
+    },
+    debug(message) {
+      return ipcRenderer.invoke('log.debug', message);
+    },
+    error(message) {
+      return ipcRenderer.invoke('log.error', message);
+    },
+  },
   system: {
     isDarkMode() {
       return ipcRenderer.invoke('system.isDarkMode');

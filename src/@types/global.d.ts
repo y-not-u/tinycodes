@@ -5,6 +5,10 @@ declare global {
   interface Window {
     electron: {
       process: NodeJS.Process;
+      log: {
+        debug: (message: string) => void;
+        error: (message: string) => void;
+      };
       system: {
         isDarkMode: () => Promise<boolean>;
         checkUpdate: () => Promise<unknown>;

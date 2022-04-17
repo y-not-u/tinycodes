@@ -71,4 +71,18 @@
   .sync-btn {
     margin-right: 4px;
   }
+  .webdav-dialog {
+    * > div {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      input {
+        outline: none;
+        border-radius: 4px;
+        padding-left: 10px;
+        border: 1px solid var(--color-contrast-low);
+        background-color: var(--color-contrast-low);
+      }
+    }
+  }
 }

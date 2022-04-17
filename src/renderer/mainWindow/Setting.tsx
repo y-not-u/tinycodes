@@ -317,6 +317,7 @@ const Setting = () => {
         onClose={() => setWebDavDialog(false)}
         onConfirm={handleConfigWebDav}
         width="50%"
+        className="webdav-dialog"
       >
         <div>
           Username:

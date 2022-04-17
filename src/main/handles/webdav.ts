@@ -34,11 +34,7 @@ class WebDav {
 
   public async connect(): Promise<boolean> {
     try {
-      const exists = await this.client.exists('/');
-      if (exists) {
-        return true;
-      }
-      throw new NotFoundError();
+      return await this.client.exists('/');
     } catch (e: any) {
       if (e.status === 401) {
         throw new UnauthorizedError();
@@ -47,7 +43,9 @@ class WebDav {
       if (e.status === 405) {
         throw new NotFoundError();
       }
-      return false;
+
+      throw e;
+      // return false;
     }
   }
 
