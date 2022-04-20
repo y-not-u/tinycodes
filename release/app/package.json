@@ -1,7 +1,7 @@
 {
   "name": "tiny-codes",
   "productName": "TinyCodes",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "A Code Snippets Box",
   "main": "./dist/main/main.js",
   "author": {
