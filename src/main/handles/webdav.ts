@@ -1,10 +1,11 @@
 import { ipcMain, app } from 'electron';
 import { Agent } from 'https';
-import { createClient } from 'webdav';
+import dayjs from 'dayjs';
+import { createClient, FileStat, ResponseDataDetailed } from 'webdav';
 import fs from 'fs';
-import db from '../db';
 import preferences, { WebDavPref } from '../preferences';
 import { UnauthorizedError, NotFoundError } from '../../exceptions/webdav';
+import db from '../db';
 
 interface Options {
   username: string;
@@ -14,6 +15,7 @@ interface Options {
 }
 
 const LOCK_FILE = `${app.getPath('userData')}/syncing.lock`;
+const LOCAL_DATA_FILE = `${app.getPath('userData')}/db.stormdb`;
 
 class WebDav {
   private client;
@@ -49,6 +51,10 @@ class WebDav {
     }
   }
 
+  public async stat(): Promise<FileStat | ResponseDataDetailed<FileStat>> {
+    return this.client.stat(this.filepath);
+  }
+
   public async exists(): Promise<boolean> {
     try {
       return await this.client.exists(this.filepath);
@@ -62,10 +68,10 @@ class WebDav {
     return data as string;
   }
 
-  public async upload(data: string): Promise<boolean> {
-    return this.client.putFileContents(this.filepath, data, {
-      overwrite: true,
-    });
+  public async upload(localFile: string) {
+    fs.createReadStream(localFile).pipe(
+      this.client.createWriteStream(this.filepath)
+    );
   }
 }
 
@@ -110,28 +116,41 @@ ipcMain.handle('webdav.exists', async (): Promise<boolean> => {
   return (await newWebDav()).exists();
 });
 
-ipcMain.handle('webdav.upload', async (_, data: string) => {
-  return (await newWebDav()).upload(data);
-});
-
-ipcMain.handle('webdav.download', async (): Promise<string> => {
-  return (await newWebDav()).download();
-});
-
 ipcMain.handle('webdav.sync', async () => {
   const webdav = await newWebDav();
 
   // if locked
   if ((await lock()) === false) {
-    return;
+    return false;
+  }
+
+  function upload() {
+    webdav.upload(LOCAL_DATA_FILE);
+  }
+
+  async function download() {
+    const dataString = await webdav.download();
+    await fs.writeFileSync(LOCAL_DATA_FILE, dataString);
+    db.reload();
   }
 
   // data file exists
-  // if (await webdav.exists()) {
-  // } else {
-  // data file not exists
-  const data = await db.value();
-  webdav.upload(JSON.stringify(data));
-  // }
-  unlock();
+  if (await webdav.exists()) {
+    const remoteStat = (await webdav.stat()) as FileStat;
+    const remoteMod = dayjs(remoteStat.lastmod).valueOf();
+
+    const localStat = await fs.statSync(LOCAL_DATA_FILE);
+    const localMod = localStat.mtimeMs;
+
+    if (remoteMod > localMod) {
+      await download();
+    } else {
+      upload();
+    }
+  } else {
+    // data file not exists
+    upload();
+  }
+
+  return unlock();
 });

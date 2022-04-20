@@ -245,7 +245,7 @@
     "react-windows-controls": "^1.1.1",
     "regenerator-runtime": "^0.13.9",
     "simplebar-react": "^2.3.6",
-    "stormdb": "^0.5.2",
+    "stormdb": "github:y-not-u/stormdb#v1.0.0",
     "uuid": "^8.3.2",
     "webdav": "^4.8.0"
   },

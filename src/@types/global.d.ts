@@ -16,8 +16,6 @@ declare global {
       webdav: {
         connect: () => Promise<boolean>;
         exists: () => Promise<boolean>;
-        download: () => Promise<void>;
-        upload: (data: string) => Promise<boolean>;
         sync: () => Promise<boolean>;
       };
       preferences: {

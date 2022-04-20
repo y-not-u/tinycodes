@@ -27,12 +27,6 @@ contextBridge.exposeInMainWorld('electron', {
     connect() {
       return ipcRenderer.invoke('webdav.connect');
     },
-    download() {
-      return ipcRenderer.invoke('webdav.download');
-    },
-    upload(data) {
-      return ipcRenderer.invoke('webdav.upload', data);
-    },
     exists() {
       return ipcRenderer.invoke('webdav.exists');
     },

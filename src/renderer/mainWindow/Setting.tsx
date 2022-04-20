@@ -130,7 +130,7 @@ const Setting = () => {
   const handleExport = () => {
     window.electron.file.save(
       '保存数据',
-      'tiny-codes.json',
+      'tinycodes.json',
       '导出',
       JSON.stringify(store?.snippetsStore.snippets || {})
     );
@@ -156,6 +156,7 @@ const Setting = () => {
   const handleSyncWebDav = async () => {
     await webdav.sync();
     notifySuccess('同步成功');
+    await store?.snippetsStore.sync();
   };
 
   const handleUpdatePartialWebDav = (config: Partial<WebDavConfig>) => {
