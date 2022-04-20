@@ -4,6 +4,17 @@ contextBridge.exposeInMainWorld('electron', {
   process: {
     platform: process.platform,
   },
+  log: {
+    info(message) {
+      return ipcRenderer.invoke('log.info', message);
+    },
+    debug(message) {
+      return ipcRenderer.invoke('log.debug', message);
+    },
+    error(message) {
+      return ipcRenderer.invoke('log.error', message);
+    },
+  },
   system: {
     isDarkMode() {
       return ipcRenderer.invoke('system.isDarkMode');
@@ -12,12 +23,23 @@ contextBridge.exposeInMainWorld('electron', {
       return ipcRenderer.invoke('checkUpdate');
     },
   },
+  webdav: {
+    connect() {
+      return ipcRenderer.invoke('webdav.connect');
+    },
+    exists() {
+      return ipcRenderer.invoke('webdav.exists');
+    },
+    sync() {
+      return ipcRenderer.invoke('webdav.sync');
+    },
+  },
   preferences: {
     get(key) {
       return ipcRenderer.invoke('preferences.get', key);
     },
     set(key, value) {
-      ipcRenderer.invoke('preferences.set', key, value);
+      return ipcRenderer.invoke('preferences.set', key, value);
     },
   },
   setting: {
@@ -77,6 +99,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
   },
   db: {
+    all() {
+      return ipcRenderer.invoke('db.all');
+    },
     newSnippet(snippet) {
       return ipcRenderer.invoke('db-new-snippet', snippet);
     },

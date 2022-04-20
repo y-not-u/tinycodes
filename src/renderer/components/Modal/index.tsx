@@ -3,6 +3,7 @@ import useEventListener from '@use-it/event-listener';
 import './index.scss';
 
 interface IModalProps {
+  className?: string;
   width?: string;
   isOpen: boolean;
   okLabel?: string;
@@ -22,8 +23,9 @@ const Modal = ({
   closeLabel,
   onConfirm,
   onClose,
+  className,
 }: IModalProps) => {
-  const rootClasses = classNames('modal', { show: isOpen });
+  const rootClasses = classNames('modal', { show: isOpen }, className);
 
   const handleConfirm = () => {
     if (onConfirm) {
@@ -67,6 +69,7 @@ const Modal = ({
 
 Modal.defaultProps = {
   width: 'auto',
+  className: '',
   onConfirm: () => {},
   onClose: () => {},
   okLabel: '确认',

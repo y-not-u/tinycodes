@@ -1,7 +1,6 @@
 import useEventListener from '@use-it/event-listener';
 import { observer } from 'mobx-react';
 import dayjs from 'dayjs';
-import { toast } from 'react-toastify';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { useRef, useEffect, useState } from 'react';
@@ -9,8 +8,10 @@ import { version } from '../../../release/app/package.json';
 import { useStore } from '../contextProvider/storeContext';
 import languages from './Content/languages';
 import Modal from '../components/Modal';
-import { EditorPref } from '../../main/preferences';
+import { EditorPref, WebDavPref } from '../../main/preferences';
 import { Theme } from '../stores/app';
+import { notifySuccess, notifyWarning } from '../utils/notify';
+import webdav from '../utils/webdav';
 import { APP_DOWNLOAD_URL } from '../../constants';
 
 import './Setting.scss';
@@ -20,6 +21,18 @@ interface NewVersion {
   releaseDate: string;
 }
 
+interface WebDavConfig {
+  username: string;
+  password: string;
+  url: string;
+}
+
+const defaultWebDavConfig: WebDavConfig = {
+  username: '',
+  password: '',
+  url: '',
+};
+
 const Setting = () => {
   const store = useStore();
   const [shortcut, setShortcut] = useState('');
@@ -28,6 +41,8 @@ const Setting = () => {
   const [editorDefaultMode, setEditorDefaultMode] = useState<
     'readonly' | 'editable'
   >('readonly');
+  const [webDavDialog, setWebDavDialog] = useState(false);
+  const [webDavConfig, setWebDavConfig] = useState<WebDavConfig | null>(null);
   const quickWindowShortcutRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
@@ -79,6 +94,16 @@ const Setting = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    window.electron.preferences
+      .get<WebDavPref>('webdav')
+      .then((config) => {
+        setWebDavConfig(config);
+        return true;
+      })
+      .catch(() => {});
+  }, []);
+
   const openExternal = (e: Event) => {
     const target = e.target as HTMLElement;
     if (target.classList.contains('external')) {
@@ -87,7 +112,7 @@ const Setting = () => {
     }
   };
 
-  useEventListener('click', (e) => {
+  useEventListener('click', (e: Event) => {
     openExternal(e);
   });
 
@@ -105,17 +130,42 @@ const Setting = () => {
   const handleExport = () => {
     window.electron.file.save(
       '保存数据',
-      'tiny-codes.json',
+      'tinycodes.json',
       '导出',
       JSON.stringify(store?.snippetsStore.snippets || {})
     );
   };
 
+  const handleOpenConfigWebDav = async () => {
+    const config = await window.electron.preferences.get<WebDavConfig>(
+      'webdav'
+    );
+    setWebDavConfig(config);
+    setWebDavDialog(true);
+  };
+
+  const handleConfigWebDav = async () => {
+    if (webDavConfig === null) return;
+
+    const authed = await webdav.auth(webDavConfig);
+    if (authed) {
+      setWebDavDialog(false);
+    }
+  };
+
+  const handleSyncWebDav = async () => {
+    await webdav.sync();
+    notifySuccess('同步成功');
+    await store?.snippetsStore.sync();
+  };
+
+  const handleUpdatePartialWebDav = (config: Partial<WebDavConfig>) => {
+    setWebDavConfig({ ...defaultWebDavConfig, ...webDavConfig, ...config });
+  };
+
   const handleCheckUpdate = () => {
     window.electron.system.checkUpdate().catch(() => {
-      toast.warning('发送失败，轻检查网络', {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
+      notifyWarning('发送失败，轻检查网络');
     });
   };
 
@@ -207,12 +257,27 @@ const Setting = () => {
         </div>
       </section>
       <section>
-        <p className="title">导出</p>
+        <p className="title">数据</p>
         <div className="setting-item">
           <span>数据文件</span>
           <button type="button" onClick={handleExport}>
             导出
           </button>
+        </div>
+        <div className="setting-item">
+          <span>WebDav</span>
+          <div>
+            <button
+              className="sync-btn"
+              type="button"
+              onClick={handleSyncWebDav}
+            >
+              同步
+            </button>
+            <button type="button" onClick={handleOpenConfigWebDav}>
+              设置
+            </button>
+          </div>
         </div>
       </section>
       <section>
@@ -247,6 +312,42 @@ const Setting = () => {
         <br />
         <br />
         <p>{newVersion?.version} 已经发布</p>
+      </Modal>
+      <Modal
+        isOpen={webDavDialog}
+        onClose={() => setWebDavDialog(false)}
+        onConfirm={handleConfigWebDav}
+        width="50%"
+        className="webdav-dialog"
+      >
+        <div>
+          Username:
+          <input
+            type="text"
+            value={webDavConfig?.username}
+            onChange={(e) =>
+              handleUpdatePartialWebDav({ username: e.target.value })
+            }
+          />
+        </div>
+        <div>
+          Password:
+          <input
+            value={webDavConfig?.password}
+            type="password"
+            onChange={(e) =>
+              handleUpdatePartialWebDav({ password: e.target.value })
+            }
+          />
+        </div>
+        <div>
+          URL:
+          <input
+            value={webDavConfig?.url}
+            type="text"
+            onChange={(e) => handleUpdatePartialWebDav({ url: e.target.value })}
+          />
+        </div>
       </Modal>
     </div>
   );

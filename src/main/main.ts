@@ -30,6 +30,7 @@ import preferences from './preferences';
 import { resolveHtmlPath } from './util';
 import { getSnippets } from './service';
 import './ipcMain';
+import './handles';
 
 let mainWindow: BrowserWindow | null = null;
 let quickWindow: BrowserWindow | null = null;
