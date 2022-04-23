@@ -11,6 +11,7 @@ import { Snippet } from '../../../@types/snippet';
 import DropdownMenu, { DropdownItem } from '../../components/DropdownMenu';
 import { useStore } from '../../contextProvider/storeContext';
 import Modal from '../../components/Modal';
+import { base64_encode } from 'renderer/utils/helper';
 
 const TopBar = ({ snippet }: { snippet: Snippet | null }) => {
   const store = useStore();
@@ -92,10 +93,43 @@ const TopBar = ({ snippet }: { snippet: Snippet | null }) => {
     }
   };
 
+  const getShareURL = (): string => {
+    if (!snippet) {
+      return '';
+    }
+    const COLORS = 'midnight';
+    const BACKGROUND = 'true';
+    const DARK_MODE = 'true';
+    const PADDING = '64';
+    const LANGUAGE = snippet.lang;
+    const TITLE = snippet.title;
+    const CODE = base64_encode(snippet.content);
+
+    const url = `https://ray.so/?colors=${COLORS}&background=${BACKGROUND}&darkMode=${DARK_MODE}&padding=${PADDING}&title=${TITLE}&code=${CODE}&language=${LANGUAGE}`;
+    return url;
+  };
+
+  const openShareURL = () => {
+    const url = getShareURL();
+    window.electron.shell.openExternal(url);
+  };
+
+  const copyShareURL = () => {
+    const url = getShareURL();
+    window.electron.clipboard.write(url);
+  };
+
   const menuItems = (
     <>
       <DropdownItem onClick={handleEdit}>编辑</DropdownItem>
       <DropdownItem onClick={() => setShowConfirm(true)}>删除</DropdownItem>
+    </>
+  );
+
+  const shareMenuItems = (
+    <>
+      <DropdownItem onClick={copyShareURL}>复制URL</DropdownItem>
+      <DropdownItem onClick={openShareURL}>打开URL</DropdownItem>
     </>
   );
 
@@ -121,9 +155,11 @@ const TopBar = ({ snippet }: { snippet: Snippet | null }) => {
             <AiOutlineStar className="icon" color="#8a8a8a" />
           )}
         </button>
-        <button className="action-btn" type="button">
-          <AiOutlineShareAlt className="icon" color="#8a8a8a" />
-        </button>
+        <DropdownMenu overlay={shareMenuItems}>
+          <button className="action-btn" type="button">
+            <AiOutlineShareAlt className="icon" color="#8a8a8a" />
+          </button>
+        </DropdownMenu>
         <DropdownMenu overlay={menuItems}>
           <button className="action-btn" type="button">
             <GoKebabVertical className="icon" color="#8a8a8a" />

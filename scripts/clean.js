@@ -1,7 +1,7 @@
 /* eslint-disable */
 const fs = require('fs');
 
-export function deleteFiles(path) {
+function deleteFiles(path) {
   fs.rmdir(path, { recursive: true, force: true }, (err) => {
     const action = `Delete path "${path}"`;
     if (err) {

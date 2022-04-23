@@ -1,11 +1,11 @@
 {
-  "name": "tiny-codes",
+  "name": "tinycodes",
   "productName": "TinyCodes",
   "version": "0.6.0",
   "description": "A Code Snippets Box",
   "main": "./dist/main/main.js",
   "author": {
-    "name": "Vogan",
+    "name": "y-not-u",
     "email": "voganwong@hotmail.com"
   },
   "scripts": {
