@@ -45,6 +45,29 @@ async function auth(config: WebDavConfig): Promise<boolean> {
   }
 }
 
+async function validate(): Promise<boolean> {
+  try {
+    const isOk = await api.connect();
+    dismissNotify();
+    if (isOk) {
+      return true;
+    }
+    notifyError('验证错误[1]');
+    return false;
+  } catch (e) {
+    if (typeof e === 'string') {
+      notifyError(e);
+      log.error(e);
+    } else if (e instanceof NotFoundError) {
+      notifyWarning('认证通过，路径不存在');
+    } else if (e instanceof UnauthorizedError) {
+      notifyError('验证错误[2]');
+    }
+    notifyError('验证错误[3]');
+    return false;
+  }
+}
+
 /**
  * Sync data between local and remote
  */
@@ -63,6 +86,7 @@ async function sync() {
 const webdav = {
   auth,
   sync,
+  validate,
 };
 
 export default webdav;
