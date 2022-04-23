@@ -43,6 +43,7 @@ const Setting = () => {
   >('readonly');
   const [webDavDialog, setWebDavDialog] = useState(false);
   const [webDavConfig, setWebDavConfig] = useState<WebDavConfig | null>(null);
+  const [webDavLoading, setWebDavLoading] = useState(false);
   const quickWindowShortcutRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
@@ -154,9 +155,15 @@ const Setting = () => {
   };
 
   const handleSyncWebDav = async () => {
+    setWebDavLoading(true);
+    if ((await webdav.validate()) === false) {
+      setWebDavLoading(false);
+      return;
+    }
     await webdav.sync();
     notifySuccess('同步成功');
     await store?.snippetsStore.sync();
+    setWebDavLoading(false);
   };
 
   const handleUpdatePartialWebDav = (config: Partial<WebDavConfig>) => {
@@ -271,6 +278,7 @@ const Setting = () => {
               className="sync-btn"
               type="button"
               onClick={handleSyncWebDav}
+              disabled={webDavLoading}
             >
               同步
             </button>
