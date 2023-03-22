@@ -11,19 +11,17 @@ jobs:
         os: [macos-latest, windows-latest, ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false
 
-      - name: Install Node.js and NPM
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15
-
       - name: install deps
-        run: |
-          npm install -g pnpm
-          pnpm install --frozen-lockfile
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
 
       - name: pnpm test
         env:
