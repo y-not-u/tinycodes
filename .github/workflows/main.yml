@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macOS-latest, ubuntu-18.04, windows-latest]
+        os: [ubuntu-18.04, windows-latest]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -47,12 +47,12 @@ jobs:
             release/build/*.AppImage
             latest-linux.yml
 
-      - name: Upload artifacts (dmg)
-        uses: actions/upload-artifact@v2
-        if: startsWith(matrix.os, 'macOS')
-        with:
-          name: mac-dmg
-          path: release/build/*.dmg
+      # - name: Upload artifacts (dmg)
+      #   uses: actions/upload-artifact@v2
+      #   if: startsWith(matrix.os, 'macOS')
+      #   with:
+      #     name: mac-dmg
+      #     path: release/build/*.dmg
 
       - name: Hash artifacts
         uses: y-not-u/electron-builder-latest-yml-action@v1
