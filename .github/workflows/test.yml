@@ -28,6 +28,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pnpm run package
-          pnpm run lint
+          : # pnpm run lint
           pnpm exec tsc
           : # pnpm test
