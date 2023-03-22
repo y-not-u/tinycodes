@@ -10551,7 +10551,7 @@ packages:
     dev: true
 
   github.com/y-not-u/stormdb/d633cc786fcbab403fcadf3c59b02a2c49669fb8:
-    resolution: {commit: d633cc786fcbab403fcadf3c59b02a2c49669fb8, repo: git+ssh://git@github.com/y-not-u/stormdb.git, type: git}
+    resolution: {tarball: https://codeload.github.com/y-not-u/stormdb/tar.gz/d633cc786fcbab403fcadf3c59b02a2c49669fb8}
     name: stormdb
     version: 0.5.2
     dev: false
