@@ -1,7 +1,14 @@
 {
-  "name": "tiny-codes",
+  "name": "tinycodes",
   "productName": "TinyCodes",
   "description": "A tiny codes box.",
+  "author": {
+    "name": "y-not-u",
+    "email": "voganwong@hotmail.com",
+    "url": "https://tiny-codes.netlify.com/"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/y-not-u/tinycodes/",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -104,13 +111,6 @@
       "repo": "tinycodes"
     }
   },
-  "author": {
-    "name": "Vogan",
-    "email": "voganwong@hotmail.com",
-    "url": "https://tiny-codes.netlify.com/"
-  },
-  "license": "MIT",
-  "homepage": "https://github.com/y-not-u/tinycodes/",
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",
