@@ -15,6 +15,8 @@ jobs:
         os: [macOS-latest, ubuntu-18.04, windows-latest]
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
 
       - name: Install Node.js
         uses: actions/setup-node@v2
