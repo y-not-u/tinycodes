@@ -11,8 +11,9 @@ jobs:
         os: [macos-latest, windows-latest, ubuntu-latest]
 
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
 
       - name: Install Node.js and NPM
         uses: actions/setup-node@v1
