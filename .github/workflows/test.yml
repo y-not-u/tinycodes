@@ -28,5 +28,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pnpm run package
-          : # pnpm run lint
-          : # pnpm test
