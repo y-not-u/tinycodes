@@ -127,7 +127,7 @@ const createWindow = async () => {
   };
 
   mainWindow = new BrowserWindow({
-    show: false,
+    show: isDevelopment,
     minWidth: 800,
     minHeight: 600,
     frame: process.platform === 'linux',
